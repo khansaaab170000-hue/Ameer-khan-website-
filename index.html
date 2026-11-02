@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ameer</title>
+<style>
+body{background:#0a0e13;color:#fff;text-align:center;font-family:sans-serif;margin:0}
+.top{background:#00ff88;padding:15px;color:#000;font-weight:900}
+.box{max-width:400px;margin:auto;padding:10px}
+.card{background:#151a21;border:1px solid #00ff88;border-radius:15px;padding:15px;margin:10px}
+.bal{font-size:50px;color:#00ff88;font-weight:900}
+.btn{background:#00ff88;color:#000;border:none;padding:15px;border-radius:30px;font-weight:900;width:100%;margin:5px;font-size:18px}
+.btn2{background:#222;color:#fff;border:1px solid #00ff88}
+#game{width:100%;height:300px;background:#10161f;border-radius:15px;position:relative;overflow:hidden;border:2px solid #00ff88}
+.bubble{position:absolute;width:60px;height:60px;background:#00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;font-size:20px}
+#pop{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:999}
+.popbox{background:#151a21;border:2px solid #00ff88;border-radius:15px;padding:20px;width:90%;max-width:350px}
+input{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #00ff88;background:#0a0e13;color:#fff;box-sizing:border-box}
+</style>
+</head>
+<body>
+<div class="top">AMEER KHAN EARNING</div>
+<div class="box">
+<div class="card">
+<div>Balance</div>
+<div class="bal">Rs.<span id="b">600</span></div>
+</div>
+<div class="card">
+<div id="game"></div>
+<button class="btn" id="startBtn">GAME START KARO</button>
+<button class="btn btn2" id="withBtn">WITHDRAW KARO</button>
+</div>
+</div>
+<div id="pop">
+<div class="popbox">
+<h3 style="color:#00ff88">Withdraw</h3>
+<p>Balance Rs.<span id="wb">600</span></p>
+<input id="name" placeholder="Naam">
+<input id="num" placeholder="JazzCash Number">
+<input id="amt" type="number" placeholder="Amount">
+<button class="btn" id="sendBtn">BHEJO</button>
+<button class="btn btn2" id="closeBtn">BAND KARO</button>
+<p id="msg" style="color:#00ff88"></p>
+</div>
+</div>
+<script>
+var bal=600;
+var game=document.getElementById("game");
+var bSpan=document.getElementById("b");
+var wbSpan=document.getElementById("wb");
+var pop=document.getElementById("pop");
+
+document.getElementById("startBtn").onclick=function(){
+game.innerHTML="";
+addBubble();
+addBubble();
+setInterval(addBubble,800);
+};
+
+function addBubble(){
+var d=document.createElement("div");
+d.className="bubble";
+d.style.left=Math.random()*240+"px";
+d.style.top=Math.random()*240+"px";
+d.innerHTML="10";
+d.onclick=function(){
+bal=bal+10;
+bSpan.innerHTML=bal;
+wbSpan.innerHTML=bal;
+d.remove();
+};
+game.appendChild(d);
+setTimeout(function(){d.remove();},3000);
+}
+
+document.getElementById("withBtn").onclick=function(){
+if(bal<500){
+alert("Rs 500 chahiye, abhi "+bal+" hai");
+return;
+}
+pop.style.display="flex";
+};
+
+document.getElementById("closeBtn").onclick=function(){
+pop.style.display="none";
+};
+
+document.getElementById("sendBtn").onclick=function(){
+var n=document.getElementById("name").value;
+var num=document.getElementById("num").value;
+var amt=document.getElementById("amt").value;
+if(n==""||num==""||amt==""){
+alert("Box bharo");
+return;
+}
+document.getElementById("msg").innerHTML="MASHALLAH "+n+" Rs "+amt+" bhej diya "+num+" pe";
+setTimeout(function(){
+bal=bal-parseInt(amt);
+bSpan.innerHTML=bal;
+wbSpan.innerHTML=bal;
+pop.style.display="none";
+alert("Success Baaki "+bal);
+},2000);
+};
+</script>
+</body>
+</html>
